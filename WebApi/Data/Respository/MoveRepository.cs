@@ -18,7 +18,7 @@ namespace WebApi.Data.Respository
             await dbContext.Moves.AddAsync(item);
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(Guid id)
         {
             var move = await dbContext.Moves.FindAsync(id);
             if (move != null) return;
@@ -33,7 +33,7 @@ namespace WebApi.Data.Respository
             return moves;
         }
 
-        public async Task<Move> GetAsync(int id) => await dbContext.Moves.FindAsync(id);
+        public async Task<Move> GetAsync(Guid id) => await dbContext.Moves.FindAsync(id);
 
 
         public async Task SaveAsync()

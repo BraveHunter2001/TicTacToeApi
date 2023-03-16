@@ -18,7 +18,7 @@ public class RoomRepository : IRepository<Room>
         await dbContext.Rooms.AddAsync(item);
     }
 
-    public async Task DeleteAsync(int id)
+    public async Task DeleteAsync(Guid id)
     {
         var room = await dbContext.Rooms.FindAsync(id);
         if (room != null) return;
@@ -33,7 +33,7 @@ public class RoomRepository : IRepository<Room>
         return rooms;
     }
 
-    public async Task<Room> GetAsync(int id) => await dbContext.Rooms.FindAsync(id);
+    public async Task<Room?> GetAsync(Guid id) => await dbContext.Rooms.FindAsync(id);
 
 
     public async Task SaveAsync()
@@ -47,7 +47,7 @@ public class RoomRepository : IRepository<Room>
         if (room == null) return;
 
         room.OwnerPlayer = item.OwnerPlayer;
-        room.OtherPlayer = item.OtherPlayer;
+        room.GuestPlayer = item.GuestPlayer;
         room.Moves = item.Moves;
     }
 

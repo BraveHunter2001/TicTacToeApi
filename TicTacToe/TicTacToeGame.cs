@@ -6,7 +6,7 @@ namespace TicTacToe
     public enum Status
     {
         WinX,
-        WinY,
+        WinO,
         Draft,
         Contain
     }
@@ -19,14 +19,14 @@ namespace TicTacToe
     public class TicTacToeGame
     {
         public Status Status { get; private set; }
-        public Cell[,] Field { get; private set; } = new Cell[CountCell,CountCell];
+        public Cell[,] Field { get; set; }
 
         const int CountCell = 3;
         private int countMove = 0;
         private Cell player = Cell.X;
-        public TicTacToeGame(Cell startPlayer = Cell.X)
+        public TicTacToeGame()
         {
-            player = startPlayer;
+            Field = new Cell[CountCell, CountCell];
         }
         public void Move(int x, int y)
         {
@@ -47,7 +47,7 @@ namespace TicTacToe
                 if (player == Cell.X)
                     Status =  Status.WinX;
                 else
-                    Status = Status.WinY;
+                    Status = Status.WinO;
             }
 
 

@@ -2,7 +2,8 @@ namespace WebApi.Models;
 
 public class Player
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public string Name { get; set; }
-    public List<Room> Rooms { get; set; }
+    public List<Room>? OwnershipRooms { get; set; }
+    public List<Room>? GuestRooms { get; set; }
 }
