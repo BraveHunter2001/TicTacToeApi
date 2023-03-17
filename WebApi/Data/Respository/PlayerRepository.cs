@@ -20,8 +20,8 @@ namespace WebApi.Data.Respository
 
         public async Task DeleteAsync(Guid id)
         {
-            var player = await dbContext.Players.FindAsync(id);
-            if (player != null) return;
+            var player = await dbContext.Players.FindAsync(new object[] { id });
+            if (player == null) return;
             dbContext.Players.Remove(player);
 
         }
@@ -33,8 +33,18 @@ namespace WebApi.Data.Respository
             return players;
         }
 
-        public async Task<Player> GetAsync(Guid id) => await dbContext.Players.FindAsync(id);
+        public async Task<Player> GetAsync(Guid id)
+        {
+            Player player = await dbContext.Players.FindAsync(new object[] { id });
+            player.OwnershipRooms = await dbContext.Rooms
+                .Where(room => room.IdOwnerPlayer == player.Id)
+                .ToListAsync();
+            player.GuestRooms = await dbContext.Rooms
+                .Where(room => room.IdGuestPlayer == player.Id)
+                .ToListAsync();
 
+            return player;
+        }
 
         public async Task SaveAsync()
         {
@@ -43,7 +53,7 @@ namespace WebApi.Data.Respository
 
         public async Task UpdateAsync(Player item)
         {
-            var player = await dbContext.Players.FindAsync(item.Id);
+            var player = await dbContext.Players.FindAsync(new object[] { item.Id });
             if (player == null) return;
 
             player.Name = item.Name;

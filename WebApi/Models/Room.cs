@@ -12,13 +12,19 @@ namespace WebApi.Models
         }
         public Guid Id { get; set; }
         public List<Move>? Moves { get; set; }
+
         public Player? Winner { get; set; }
+
         public Player? PrevPlayerWasMoved { get; set; }
-        public Cell[,] Field { get; set; }
+
+        public Cell[] Field { get; set; }
+        public int CountCell { get; set; }
         public StatusRoom Status { get; set; }
 
         // links
+        public Guid IdOwnerPlayer { get; set; }
         public Player OwnerPlayer { get; set; }
+        public Guid? IdGuestPlayer { get; set; }
         public Player? GuestPlayer { get; set; }
 
 

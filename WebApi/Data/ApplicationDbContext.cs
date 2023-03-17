@@ -18,7 +18,8 @@ namespace WebApi.Data
         {
             builder.Entity<Move>()
                 .HasOne<Room>(move => move.Room)
-                .WithMany(room => room.Moves);
+                .WithMany(room => room.Moves)
+                .HasForeignKey(move=> move.IdRoom);
 
             builder.Entity<Move>()
                .HasOne<Player>(move => move.Player);
@@ -26,13 +27,16 @@ namespace WebApi.Data
             // link to owner
             builder.Entity<Player>()
                 .HasMany<Room>(player => player.OwnershipRooms)
-                .WithOne(room => room.OwnerPlayer);
+                .WithOne(room => room.OwnerPlayer)
+                .HasForeignKey(room => room.IdOwnerPlayer);
 
             // link to guest
             builder.Entity<Player>()
                 .HasMany<Room>(player => player.GuestRooms)
                 .WithOne(room => room.GuestPlayer)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasForeignKey(room => room.IdGuestPlayer); 
+
 
             
 

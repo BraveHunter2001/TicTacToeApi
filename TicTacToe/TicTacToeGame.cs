@@ -21,11 +21,12 @@ namespace TicTacToe
         public Status Status { get; private set; }
         public Cell[,] Field { get; set; }
 
-        const int CountCell = 3;
+        int CountCell = 3;
         private int countMove = 0;
         private Cell player = Cell.X;
-        public TicTacToeGame()
+        public TicTacToeGame(int countCell = 3)
         {
+            CountCell = countCell;
             Field = new Cell[CountCell, CountCell];
         }
         public void Move(int x, int y)

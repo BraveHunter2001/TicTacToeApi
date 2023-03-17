@@ -33,7 +33,14 @@ public class RoomRepository : IRepository<Room>
         return rooms;
     }
 
-    public async Task<Room?> GetAsync(Guid id) => await dbContext.Rooms.FindAsync(id);
+    public async Task<Room?> GetAsync(Guid id)
+    {
+        var room =  await dbContext.Rooms.FindAsync(id);
+        room.OwnerPlayer = await dbContext.Players.FirstOrDefaultAsync(player => player.Id == room.IdOwnerPlayer);
+        room.GuestPlayer = await dbContext.Players.FirstOrDefaultAsync(player => player.Id == room.IdGuestPlayer);
+        room.Moves = await dbContext.Moves.Where(move=>move.IdRoom == room.Id).ToListAsync();
+        return room;
+    }
 
 
     public async Task SaveAsync()
