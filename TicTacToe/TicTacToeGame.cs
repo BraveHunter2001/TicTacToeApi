@@ -24,9 +24,10 @@ namespace TicTacToe
         int CountCell = 3;
         private int countMove = 0;
         private Cell player = Cell.X;
-        public TicTacToeGame(Cell player,int countCell = 3)
+        public TicTacToeGame(Cell player,int countCell = 3, int countMove = 0)
         {
             this.player = player;
+            this.countMove = countMove;
             CountCell = countCell;
             Field = new Cell[CountCell, CountCell];
         }

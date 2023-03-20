@@ -19,6 +19,7 @@ namespace WebApi.Models
 
         public Cell[] Field { get; set; }
         public int CountCell { get; set; }
+        public int CountMove { get; set; }
         public StatusRoom Status { get; set; }
 
         // links

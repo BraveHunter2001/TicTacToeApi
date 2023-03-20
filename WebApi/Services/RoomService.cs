@@ -32,6 +32,7 @@ namespace WebApi.Services
                 Status = Room.StatusRoom.AwaitConnectPlayers,
                 Field = new Cell[CountCell * CountCell],
                 CountCell = CountCell,
+                Moves = new List<Move>()
             };
 
             player.OwnershipRooms.Add(room);
@@ -127,9 +128,9 @@ namespace WebApi.Services
 
             TicTacToeGame game;
             if (room.OwnerPlayer == move.Player)
-                game = new TicTacToeGame(Cell.X, room.CountCell);
+                game = new TicTacToeGame(Cell.X, room.CountCell, room.CountMove);
             else
-                game = new TicTacToeGame(Cell.O, room.CountCell);
+                game = new TicTacToeGame(Cell.O, room.CountCell,room.CountMove);
 
             game.Field = ToTwoDimensionArray(room.Field, room.CountCell);
 
@@ -137,6 +138,7 @@ namespace WebApi.Services
             
             room.Moves.Add(move);
             room.Field = ToOneDimensionArray(game.Field);
+            room.CountMove++;
             room.PrevPlayerWasMoved = move.Player;
 
             switch (game.Status) 
