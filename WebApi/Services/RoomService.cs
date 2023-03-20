@@ -125,7 +125,11 @@ namespace WebApi.Services
             if (room.PrevPlayerWasMoved == move.Player)
                 throw new MoveInRoomException("This player has already moved.");
 
-            var game = new TicTacToeGame(room.CountCell);
+            TicTacToeGame game;
+            if (room.OwnerPlayer == move.Player)
+                game = new TicTacToeGame(Cell.X, room.CountCell);
+            else
+                game = new TicTacToeGame(Cell.O, room.CountCell);
 
             game.Field = ToTwoDimensionArray(room.Field, room.CountCell);
 
@@ -169,7 +173,8 @@ namespace WebApi.Services
             {
                 for (int j = 0; j < cells.GetLength(1); j++)
                 {
-                    arr[arr.GetLength(0) * i + j] = cells[i, j];    
+                    int ind = cells.GetLength(0) * i + j;
+                    arr[ind] = cells[i, j];    
                 }
             }
             return arr;
@@ -180,7 +185,7 @@ namespace WebApi.Services
 
             for(int i =0; i < cells.Length; i++)
             {
-                arr[i % countInRow, i] = cells[i];
+                arr[i / countInRow, i % countInRow] = cells[i];
             }
             return arr;
         }

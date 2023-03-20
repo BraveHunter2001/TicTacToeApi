@@ -11,6 +11,7 @@ namespace WebApi.Services
         public Task<Room> Connect(Guid idRoom, Player player);
 
         public Task Disconnect(Room room, Player player);
+        public Task<Room> MakeMoveAsync(Room room, Move move);
 
     }
 }

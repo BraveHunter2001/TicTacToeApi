@@ -24,8 +24,9 @@ namespace TicTacToe
         int CountCell = 3;
         private int countMove = 0;
         private Cell player = Cell.X;
-        public TicTacToeGame(int countCell = 3)
+        public TicTacToeGame(Cell player,int countCell = 3)
         {
+            this.player = player;
             CountCell = countCell;
             Field = new Cell[CountCell, CountCell];
         }
@@ -49,19 +50,28 @@ namespace TicTacToe
                     Status =  Status.WinX;
                 else
                     Status = Status.WinO;
+                return;
             }
 
+            Switch();
 
-            // switch of player
-            if (player == Cell.X)
-                player = Cell.O; 
-            else player = Cell.X;
 
             countMove++;
-
-            if (countMove == CountCell * CountCell) { Status = Status.Draft; }
+            if (countMove == CountCell * CountCell) { 
+                Status = Status.Draft;
+                return;
+            }
 
             Status = Status.Contain;  
+        }
+
+        private void Switch()
+        {
+            // switch of player
+            if (player == Cell.X)
+                player = Cell.O;
+            else player = Cell.X;
+
         }
         private bool isWin(int x, int y, Cell player)
         {
@@ -69,7 +79,7 @@ namespace TicTacToe
             // check row 
             for (int i = 0; i < CountCell; i++) 
             {
-               if (i == x) continue;
+               if (i == y) continue;
                counterCell &= (Field[x, i] == player);
             }
             if (counterCell) { return true; }
@@ -78,7 +88,7 @@ namespace TicTacToe
             counterCell = true;
             for (int i = 0; i < CountCell; i++)
             {
-                if (i == y) continue;
+                if (i == x) continue;
                 counterCell &= Field[i, y] == player;
             }
             if (counterCell) { return true; }

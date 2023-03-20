@@ -1,6 +1,6 @@
 ﻿using TicTacToe;
 
-TicTacToeGame game = new TicTacToeGame();
+TicTacToeGame game = new TicTacToeGame(Cell.X);
 game.Move(0, 0);
 Console.WriteLine(game.Status);
 Console.WriteLine(game.Field); // x]

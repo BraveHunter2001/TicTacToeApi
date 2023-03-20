@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TicTacToe;
 using WebApi.Data.Respository;
 using WebApi.DTO;
 using WebApi.Exceptions.RoomExceptions;
@@ -98,7 +99,6 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-
         public async Task<ActionResult<InfoRoom>> InfoAbout(Guid idRoom)
         {
             var room = await roomRepository.GetAsync(idRoom);
@@ -123,6 +123,41 @@ namespace WebApi.Controllers
                 WinnerName = room.Winner != null ? room.Winner.Name : "",
                 Field = room.Field,
                 Moves = moves
+            };
+
+            return Ok(info);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<MoveInfo>> MakeMove(DTO.Move move)
+        {
+            Room room = await roomRepository.GetAsync(move.IdRoom);
+            if (room == null) return BadRequest("Room not found");
+
+            Player player = await playerRepository.GetAsync(move.IdPlayer);
+            if (player == null) return BadRequest("Player not found");
+
+
+            Models.Move moveModel = new Models.Move()
+            {
+                Id = Guid.NewGuid(),
+                IdRoom = room.Id,
+                Room = room,
+                Player = player,
+                X = move.Coords.X,
+                Y = move.Coords.Y,
+            };
+
+            try
+            {
+                room = await roomService.MakeMoveAsync(room, moveModel);
+            }catch (Exception ex) { return BadRequest(ex.Message); }
+
+            MoveInfo info = new MoveInfo()
+            {
+                Field = room.Field,
+                Status = room.Status,
+                WinnerName = room.Winner?.Name  
             };
 
             return Ok(info);
