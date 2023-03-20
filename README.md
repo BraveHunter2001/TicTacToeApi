@@ -1,6 +1,6 @@
 # TicTacToeApi
 *Задание* : Спроектируйте и реализуйте REST API для игры в крестики нолики.  
-*Стек*: ASP.NET, Entity Framework (Code-First), Postgresql, xUnit, Moq  
+*Стек*: ASP.NET, Entity Framework (Code-First), Postgresql, xUnit, Moq, Swagger
 
 ## Описание Api:
 ### Players
