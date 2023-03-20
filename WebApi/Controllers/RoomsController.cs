@@ -58,7 +58,7 @@ namespace WebApi.Controllers
                 return BadRequest(ex.Message);
             }
 
-           return Ok();
+           return Ok($"Room {room.Id} was delete");
 
         }
 
@@ -75,7 +75,7 @@ namespace WebApi.Controllers
                 return BadRequest(ex.Message);
             }
 
-            return Ok();
+            return Ok("Connect is succsessfull");
         }
 
         [HttpPost]
@@ -95,7 +95,7 @@ namespace WebApi.Controllers
             catch (NotPermissionRoomException ex )
             { return BadRequest(ex.Message); }
 
-            return Ok();
+            return Ok("Disconnect is succsessfull");
         }
 
         [HttpGet]
